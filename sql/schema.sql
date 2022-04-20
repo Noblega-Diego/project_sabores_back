@@ -124,8 +124,12 @@ CREATE TABLE IF NOT EXISTS Pedido(
 	updated_at timestamp null on update current_timestamp,
 	deleted bit(1) not null default 0,
     mercado_pago_id bigint null,
+	cliente_id bigint not null,
+    domicilio_id bigint not null,
 	primary key (nro_pedido),
-    foreign key (mercado_pago_id) references MercadoPagoDatos(id_pago) 
+    foreign key (mercado_pago_id) references MercadoPagoDatos(id_pago),
+    foreign key (cliente_id) references cliente(id),
+    foreign key (domicilio_id) references domicilio(id)
 );
 
 CREATE TABLE IF NOT EXISTS detallePedido(

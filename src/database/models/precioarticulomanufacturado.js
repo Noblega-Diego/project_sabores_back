@@ -16,8 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   PrecioArticuloManufacturado.init({
     precioVenta: DataTypes.DECIMAL,
     precioCompra: DataTypes.DECIMAL,
-    fecha: DataTypes.DATE,
-    cantidad: DataTypes.INTEGER
+    fecha: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'PrecioArticuloManufacturado',

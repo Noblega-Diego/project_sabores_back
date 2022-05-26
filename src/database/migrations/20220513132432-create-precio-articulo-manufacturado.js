@@ -24,9 +24,6 @@ module.exports = {
       fecha: {
         type: Sequelize.DATE
       },
-      cantidad: {
-        type: Sequelize.INTEGER
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -1,9 +1,11 @@
 import { Router } from "express";
-import { getAll } from '../controllers/ArticuloManuFacturado.controller';
+import { ArticuloListados } from '../controllers/ArticuloListados.controller';
 
 const express = require('express');
 const router:Router = express.Router();
+const articuloListadosController = new ArticuloListados();
 
-router.get('/articulo/', getAll)
+router.get('/articulos/', articuloListadosController.getAll)
+router.get('/articulos/:id', articuloListadosController.getById)
 
 export default router;

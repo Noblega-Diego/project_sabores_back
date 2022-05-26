@@ -21,7 +21,7 @@ module.exports = {
       imagen: {
         type: Sequelize.STRING
       },
-      tiempoeEstimadoCocina: {
+      tiempoEstimadoCocina: {
         type: Sequelize.INTEGER
       },
       createdAt: {

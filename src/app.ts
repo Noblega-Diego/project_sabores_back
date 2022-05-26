@@ -11,5 +11,5 @@ app.use(express.json())
 app.use(RouterArticuloListado)
 
 app.listen(config.PORT, () => {
-    console.log(`Servidor en puerto ${config.PORT}`, config.PORT);
+    console.log(`Servidor en puerto ${config.PORT}`);
 })

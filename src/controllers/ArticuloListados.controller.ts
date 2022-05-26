@@ -10,24 +10,25 @@ export class ArticuloListados{
         this.daoArticuloManufacturado = new ArticuloManufacturadoDao();
     }
 
-    async getAll(req:Request, res:Response){
+    public getAll = async (req:Request, res:Response) =>{
         try {
-            let articulos = [...(await this.daoArticuloManufacturado.getAll())].map(this.parseToArticle)
+            let articulos = [...(await this.daoArticuloManufacturado.getAll())].map(ArticuloListados.parseToArticle)
             res.send(articulos);
         }catch (e) {
             res.send({err:e})
         }
     }
 
-    async getById(req:Request, res:Response){
+    public getById = async (req:Request, res:Response) =>{
         try {
-            res.send(this.parseToArticle(await this.daoArticuloManufacturado.getById(Number(req.params.id))))
+            res.send(ArticuloListados.parseToArticle(await this.daoArticuloManufacturado.getById(Number(req.params.id))))
         }catch (e) {
             res.send({err:e})
         }
+
     }
 
-    private parseToArticle(a:any):ArticuloDto{
+    private static parseToArticle(a:any):ArticuloDto{
         return {
             id: a.id,
             denominacion: a.denominacion,
@@ -37,7 +38,7 @@ export class ArticuloListados{
                 denominacion: a.RubroGeneral.denominacion,
                 id: a.RubroGeneral.id
             },
-            precio:Number(a.PrecioArticuloManufacturados.pop()?.precioVenta)
+            precio:Number([...(a.PrecioArticuloManufacturados)].shift().precioVenta)
         }
     }
 }

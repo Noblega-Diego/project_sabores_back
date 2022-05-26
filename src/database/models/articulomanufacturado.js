@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
   ArticuloManufacturado.init({
     denominacion: DataTypes.STRING,
     imagen: DataTypes.STRING,
-    tiempoeEstimadoCocina: DataTypes.INTEGER
+    tiempoEstimadoCocina: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'ArticuloManufacturado',

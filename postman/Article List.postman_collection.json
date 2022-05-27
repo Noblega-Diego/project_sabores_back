@@ -1,0 +1,46 @@
+{
+	"info": {
+		"_postman_id": "34bf28f4-0375-4deb-b1d4-9828c1727377",
+		"name": "Article List",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All Articles",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/articulos",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"articulos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get article by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/articulos/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"articulos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

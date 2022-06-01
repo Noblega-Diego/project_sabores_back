@@ -18,6 +18,20 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      pedidoId: {
+        type: Sequelize.INTEGER,
+        references:{
+          model: "Pedidos",
+          key: "id"
+        }
+      },
+      articuloManufacturadoId: {
+        type: Sequelize.INTEGER,
+        references:{
+          model: "ArticuloManufacturados",
+          key: "id"
+        }
       }
     });
   },

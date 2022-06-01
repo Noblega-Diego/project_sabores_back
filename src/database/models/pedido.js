@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Pedido.init({
-    numero: DataTypes.NUMBER,
+    numero: DataTypes.INTEGER,
     tipoEntrega: DataTypes.ENUM('local', 'envio'),
     horaEstimadaFin: DataTypes.DATE,
     fecha: DataTypes.DATE,

@@ -4,4 +4,5 @@ export interface BaseRepository<ID,T>{
     getById(id:ID): Promise<T|undefined>,
     removeOne(id:ID): Promise<void>,
     update(id:ID,obj:T): Promise<T>
+    create(obj:T): Promise<T>
 }

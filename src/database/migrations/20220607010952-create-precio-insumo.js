@@ -1,35 +1,28 @@
 'use strict';
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('ArticuloManufacturados', {
+        await queryInterface.createTable('PrecioInsumos', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            rubroGeneralId: {
+            insumoId: {
                 type: Sequelize.INTEGER,
                 references: {
-                    model: "RubroGenerals",
+                    model: "Insumos",
                     key: "id"
                 }
             },
-            CategoriaId: {
-                type: Sequelize.INTEGER,
-                references: {
-                    model: "Categorias",
-                    key: "id"
-                }
+            precioVenta: {
+                type: Sequelize.DOUBLE
             },
-            denominacion: {
-                type: Sequelize.STRING
+            precioCompra: {
+                type: Sequelize.DOUBLE
             },
-            imagen: {
-                type: Sequelize.STRING
-            },
-            tiempoEstimadoCocina: {
-                type: Sequelize.INTEGER
+            fecha: {
+                type: Sequelize.DATE
             },
             createdAt: {
                 allowNull: false,
@@ -42,6 +35,6 @@ module.exports = {
         });
     },
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('ArticuloManufacturados');
+        await queryInterface.dropTable('PrecioInsumos');
     }
 };

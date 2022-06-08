@@ -30,4 +30,9 @@ export class ArticuloManufacturadoDao implements BaseRepository<number, any>{
         })
         return await this.getById(id);
     }
+
+    async create(obj: any): Promise<any> {
+        return await ArticuloManufacturado.create(obj)
+    }
+
 }

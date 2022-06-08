@@ -7,11 +7,11 @@ const Rol:ModelStatic<any> = require('./../models').Rol
 
 export class UsuarioDao implements BaseRepository<number, any>{
     async getAll(): Promise<any> {
-        return await Usuario.findAll({include: [ { model:Rol }, { model:Domicilio, order: [['fecha', 'DESC']], limit:1} ]})
+        return await Usuario.findAll({include: [ { model:Rol }, { model:Domicilio} ]})
     }
 
     async getById(id: number): Promise<any> {
-        return await Usuario.findByPk(id, {include:[{ model:Rol }, { model:Domicilio, order: [['fecha', 'DESC']], limit:10 }]})
+        return await Usuario.findByPk(id, {include:[{ model:Rol }, { model:Domicilio}]})
     }
 
     async removeOne(id: number): Promise<void> {

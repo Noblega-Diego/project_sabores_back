@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
             this.hasMany(models.Insumo)
         }
     }
-    RubroArticulo.init({
+    RubroInsumo.init({
         denominacion: DataTypes.STRING
     }, {
         sequelize,

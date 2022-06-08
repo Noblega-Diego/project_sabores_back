@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
             })
         }
     }
-    ARticuloManufacturadoDetalle.init({
+    ArticuloManufacturadoDetalle.init({
         cantidad: DataTypes.DOUBLE,
         unidadDeMedida: DataTypes.STRING
     }, {

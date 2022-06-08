@@ -30,4 +30,9 @@ export class InsumoDao implements BaseRepository<number, any>{
         })
         return await this.getById(id);
     }
+
+    async create(obj: any): Promise<any> {
+        return await Insumo.create(obj)
+    }
+
 }

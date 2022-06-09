@@ -19,7 +19,7 @@ export default class PedidoController{
     }
 
     public generarPedido = async (req:Request, res:Response) =>{
-        const peticionPedido:PeticionPedidioDto = req.body!;
+        const peticionPedido:PeticionPedidoDto = req.body!;
         if(!(peticionPedido.tipoEntrega === 'envio' || peticionPedido.tipoEntrega === 'local')){
             res.status(400).send({res:"tipo entrega no es correcto"}); return;
         }
@@ -36,7 +36,7 @@ interface DetallePeticionPedidoDto {
     ArticuloManufacturadoId:number,
     cantidad:number
 }
-interface PeticionPedidioDto {
+interface PeticionPedidoDto {
     detalles:Array<DetallePeticionPedidoDto>,
     tipoEntrega:string,
     estado:string

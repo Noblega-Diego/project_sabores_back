@@ -33,9 +33,6 @@ module.exports = {
             telefono: {
                 type: Sequelize.INTEGER
             },
-            rolId: {
-                type: Sequelize.INTEGER
-            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE

@@ -24,9 +24,6 @@ module.exports = {
             localidad: {
                 type: Sequelize.STRING
             },
-            usuarioId: {
-                type: Sequelize.INTEGER
-            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE

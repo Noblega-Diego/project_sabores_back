@@ -11,8 +11,7 @@ const {sequelize}:ModelStatic<any> = require('./../models')
 
 export class ArticuloManufacturadoDao implements BaseRepository<number, any>{
     async getAll(): Promise<any> {
-        console.log(await ArticuloManufacturado.findAll({include: [ { model:RubroGeneral }, { model:Categoria, as:'Categoria'}, { model:PrecioArticuloManufacturado, order: [['fecha', 'DESC']], limit:1} ]}))
-        return []
+        return await ArticuloManufacturado.findAll({include: [ { model:RubroGeneral }, { model:Categoria, as:'Categoria'}, { model:PrecioArticuloManufacturado, order: [['fecha', 'DESC']], limit:1} ]})
     }
 
     async getById(id: number): Promise<any> {

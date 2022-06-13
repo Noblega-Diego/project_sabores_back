@@ -1,4 +1,3 @@
-import {PedidoRepository} from "../database/repository/PedidoRepository";
 import {Request, Response} from "express";
 import {BasicController} from "./BasicController";
 import {ArticuloManufacturadoDetalleDao} from "../database/repository/ArticuloManufacturadoDetalle.dao";

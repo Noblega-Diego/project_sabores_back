@@ -1,21 +1,27 @@
 import {PedidoRepository} from "../database/repository/PedidoRepository";
 import {Request, Response} from "express";
+import {BasicController} from "./BasicController";
 
-export default class PedidoController{
+export default class PedidoController extends BasicController<PedidoRepository>{
 
-    private daoPedido!: PedidoRepository;
 
     constructor(){
-        this.daoPedido = new PedidoRepository();
+        super()
+        this.repository = new PedidoRepository();
     }
 
-    public getAll = async (req:Request, res:Response) => {
-        res.send(await this.daoPedido.getAll());
-    }
 
-    public getById = async (req:Request, res:Response) =>{
-        const id:string = req.params.id;
-        res.send(await this.daoPedido.getById(Number.parseInt(id)));
+    public create = async (req:Request, res:Response) =>{
+        const peticionPedido:PeticionPedidoDto = req.body!;
+        if(!(peticionPedido.tipoEntrega === 'envio' || peticionPedido.tipoEntrega === 'local')){
+            res.status(400).send({res:"tipo entrega no es correcto"}); return;
+        }
+        let pedido = await this.repository.create({...{
+            fecha: new Date(),
+            tipoEntrega: peticionPedido.tipoEntrega,
+            estado: peticionPedido.estado
+        }})
+        res.send(pedido)
     }
 
     public generarPedido = async (req:Request, res:Response) =>{
@@ -23,11 +29,11 @@ export default class PedidoController{
         if(!(peticionPedido.tipoEntrega === 'envio' || peticionPedido.tipoEntrega === 'local')){
             res.status(400).send({res:"tipo entrega no es correcto"}); return;
         }
-        let pedido = await this.daoPedido.create({
+        let pedido = await this.repository.create({
             fecha: new Date(),
             tipoEntrega: peticionPedido.tipoEntrega,
             estado: peticionPedido.estado,
-            detallePedidos: peticionPedido.detalles
+            detalle: peticionPedido.detalles
         })
         res.send(pedido)
     }

@@ -1,17 +1,16 @@
 import {BaseRepository} from './BaseRepositoty';
-import {ModelStatic} from "sequelize";
+import {Insumo} from "../models/Insumo";
+import {RubroInsumo} from "../models/RubroInsumo";
+import {PrecioInsumo} from "../models/PrecioInsumo";
 
-const Insumo:ModelStatic<any> = require('./../models').Insumo
-const PrecioInsumo:ModelStatic<any> = require('./../models').PrecioInsumo
-const RubroInsumo:ModelStatic<any> = require('./../models').RubroInsumo
 
-export class InsumoDao implements BaseRepository<number, any>{
-    async getAll(): Promise<any> {
+export class InsumoDao implements BaseRepository<number, Insumo>{
+    async getAll(): Promise<Insumo[]> {
         return await Insumo.findAll({include: [ { model:RubroInsumo }, { model:PrecioInsumo, order: [['fecha', 'DESC']], limit:1} ]})
     }
 
-    async getById(id: number): Promise<any> {
-        return await Insumo.findByPk(id, {include:[{ model:RubroInsumo }, { model:PrecioInsumo, order: [['fecha', 'DESC']], limit:10 }]})
+    async getById(id: number): Promise<Insumo> {
+        return (await Insumo.findByPk(id, {include:[{ model:RubroInsumo }, { model:PrecioInsumo, order: [['fecha', 'DESC']], limit:10 }]}))!
     }
 
     async removeOne(id: number): Promise<void> {
@@ -22,7 +21,7 @@ export class InsumoDao implements BaseRepository<number, any>{
         })
     }
 
-    async update(id: number, obj: any): Promise<any> {
+    async update(id: number, obj: any): Promise<Insumo> {
         await Insumo.update(obj,{
             where:{
                 id:id
@@ -31,7 +30,7 @@ export class InsumoDao implements BaseRepository<number, any>{
         return await this.getById(id);
     }
 
-    async create(obj: any): Promise<any> {
+    async create(obj: any): Promise<Insumo> {
         return await Insumo.create(obj)
     }
 

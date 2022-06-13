@@ -2,6 +2,7 @@ import express from "express";
 require('dotenv').config()
 import RouterArticuloListado from './routers/ArticuloListado.router'
 import RouterPedido from './routers/Pedido.router'
+import RouterDetalleArticulo from './routers/DetalleArticulo.router'
 // @ts-ignore
 import cors from 'cors';
 
@@ -12,6 +13,7 @@ const config = {
 app.use(cors())
 app.use(express.json())
 
+app.use(RouterDetalleArticulo)
 app.use(RouterArticuloListado)
 app.use(RouterPedido)
 

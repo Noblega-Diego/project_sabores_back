@@ -1,17 +1,16 @@
 import {BaseRepository} from './BaseRepositoty';
-import {ModelStatic} from "sequelize";
+import {Usuario} from "../models/Usuario";
+import {Rol} from "../models/Rol";
+import {Domicilio} from "../models/Domicilio";
 
-const Usuario:ModelStatic<any> = require('./../models').Usuario
-const Domicilio:ModelStatic<any> = require('./../models').Domicilio
-const Rol:ModelStatic<any> = require('./../models').Rol
 
-export class UsuarioDao implements BaseRepository<number, any>{
-    async getAll(): Promise<any> {
+export class UsuarioDao implements BaseRepository<number, Usuario>{
+    async getAll(): Promise<Usuario[]> {
         return await Usuario.findAll({include: [ { model:Rol }, { model:Domicilio} ]})
     }
 
-    async getById(id: number): Promise<any> {
-        return await Usuario.findByPk(id, {include:[{ model:Rol }, { model:Domicilio}]})
+    async getById(id: number): Promise<Usuario> {
+        return (await Usuario.findByPk(id, {include:[{ model:Rol }, { model:Domicilio}]}))!
     }
 
     async removeOne(id: number): Promise<void> {
@@ -22,7 +21,7 @@ export class UsuarioDao implements BaseRepository<number, any>{
         })
     }
 
-    async update(id: number, obj: any): Promise<any> {
+    async update(id: number, obj: any): Promise<Usuario> {
         await Usuario.update(obj,{
             where:{
                 id:id
@@ -31,7 +30,7 @@ export class UsuarioDao implements BaseRepository<number, any>{
         return await this.getById(id);
     }
 
-    async create(obj: any): Promise<any> {
+    async create(obj: any): Promise<Usuario> {
         return await Usuario.create(obj)
     }
 

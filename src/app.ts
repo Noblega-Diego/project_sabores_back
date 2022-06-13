@@ -1,6 +1,6 @@
 import express from "express";
 require('dotenv').config()
-import RouterArticuloListado from './routers/ArticuloListado.router'
+import RouterArticulo from './routers/Articulo.router'
 import RouterPedido from './routers/Pedido.router'
 // @ts-ignore
 import cors from 'cors';
@@ -12,7 +12,7 @@ const config = {
 app.use(cors())
 app.use(express.json())
 
-app.use(RouterArticuloListado)
+app.use(RouterArticulo)
 app.use(RouterPedido)
 
 app.listen(config.PORT, () => {

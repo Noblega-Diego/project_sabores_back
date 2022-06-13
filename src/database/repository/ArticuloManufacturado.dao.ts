@@ -1,23 +1,22 @@
 import {BaseRepository} from './BaseRepositoty';
 import {ModelStatic} from "sequelize";
+import {ArticuloManufacturado} from "../models/ArticuloManufacturado";
+import {RubroGeneral} from "../models/RubroGeneral";
+import {Categoria} from "../models/Categoria";
+import {PrecioArticuloManufacturado} from "../models/PrecioArticuloManufacturado";
+import {ArticuloManufacturadoDetalle} from "../models/ArticuloManufacturadoDetalle";
+import {Insumo} from "../models/Insumo";
 
-const ArticuloManufacturado:ModelStatic<any> = require('./../models').ArticuloManufacturado
-const PrecioArticuloManufacturado:ModelStatic<any> = require('./../models').PrecioArticuloManufacturado
-const RubroGeneral:ModelStatic<any> = require('./../models').RubroGeneral
-const ArticuloManufacturadoDetalle:ModelStatic<any> = require('./../models').ArticuloManufacturadoDetalle
-const Categoria:ModelStatic<any> = require('./../models').Categoria
-const Insumo:any = require('./../models').Insumo
-const {sequelize}:ModelStatic<any> = require('./../models')
+const {sequelize}:ModelStatic<any> = require('../models')
 
-export class ArticuloManufacturadoDao implements BaseRepository<number, any>{
-    async getAll(): Promise<any> {
-        console.log(await ArticuloManufacturado.findAll({include: [ { model:RubroGeneral }, { model:Categoria, as:'Categoria'}, { model:PrecioArticuloManufacturado, order: [['fecha', 'DESC']], limit:1} ]}))
-        return []
+export class ArticuloManufacturadoDao implements BaseRepository<number, ArticuloManufacturado>{
+    async getAll(): Promise<ArticuloManufacturado[]> {
+        return await ArticuloManufacturado.findAll({include: [ { model:RubroGeneral },{ model:Categoria}, { model:PrecioArticuloManufacturado, order: [['fecha', 'DESC']], limit:1} ]})
     }
 
-    async getById(id: number): Promise<any> {
-        return await ArticuloManufacturado.findByPk(id, {include:[{ model:RubroGeneral }, { model:Categoria, as:'Categoria' }, { model:PrecioArticuloManufacturado, order: [['fecha', 'DESC']], limit:10 },
-                {model:ArticuloManufacturadoDetalle, include:[{model:Insumo}]}]})
+    async getById(id: number): Promise<ArticuloManufacturado> {
+        return (await ArticuloManufacturado.findByPk(id, {include:[{ model:RubroGeneral }, { model:Categoria}, {model: ArticuloManufacturadoDetalle},{ model:PrecioArticuloManufacturado, order: [['fecha', 'DESC']], limit:10 },
+                {model:ArticuloManufacturadoDetalle, include:[{model:Insumo}]}]}))!
     }
 
     async removeOne(id: number): Promise<void> {
@@ -28,7 +27,7 @@ export class ArticuloManufacturadoDao implements BaseRepository<number, any>{
         })
     }
 
-    async update(id: number, obj: any): Promise<any> {
+    async update(id: number, obj: ArticuloManufacturado): Promise<ArticuloManufacturado> {
         await ArticuloManufacturado.update(obj,{
             where:{
                 id:id
@@ -37,26 +36,26 @@ export class ArticuloManufacturadoDao implements BaseRepository<number, any>{
         return await this.getById(id);
     }
 
-    async create(obj: any): Promise<any> {
+    async create(obj: ArticuloManufacturado): Promise<ArticuloManufacturado> {
         const articleId = await sequelize!.transaction(async (t)=> {
             const article = await ArticuloManufacturado.create({
                 denominacion: obj.denominacion,
                 imagen: obj.imagen,
                 tiempoEstimadoCocina: obj.tiempoEstimadoCocina,
-                RubroGeneralId: obj.RubroGeneralId,
-                CategoriaId: obj.CategoriaId
+                rubroGeneralId: obj.rubroGeneralId,
+                categoriaId: obj.categoriaId
             });
             await PrecioArticuloManufacturado.create({
                 ArticuloManufacturadoId: article.id,
-                precioVenta: obj.precio.precioVenta,
-                precioCompra: obj.precio.precioCompra,
+                precioVenta: obj.precios[0].precioVenta,
+                precioCompra: obj.precios[0].precioCompra,
                 fecha: new Date()
             });
 
             for (const detalle of obj.detalles) {
                 await ArticuloManufacturadoDetalle.create({
-                    InsumoId: detalle.InsumoId,
-                    ArticuloManufacturadoId: article.id,
+                    insumoId: detalle.insumoId,
+                    articuloManufacturadoId: article.id,
                     cantidad: detalle.cantidad,
                     unidadDeMedida: detalle.unidadDeMedida
                 });

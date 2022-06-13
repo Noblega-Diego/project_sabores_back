@@ -1,13 +1,13 @@
 import {BaseRepository} from './BaseRepositoty';
-import {ModelStatic} from "sequelize";
+import {Pedido} from "../models/Pedido";
+import {DetallePedido} from "../models/DetallePedido";
+import {ArticuloManufacturado} from "../models/ArticuloManufacturado";
 
-const Pedido:ModelStatic<any> = require('./../models').Pedido
-const DetallePedido = require('./../models').DetallePedido
-const ArticuloManufacturado = require('./../models').ArticuloManufacturado
-const {sequelize}:ModelStatic<any> = require('./../models')
+import {sequelize} from "../models";
 
-export class PedidoRepository implements BaseRepository<number, any>{
-    async getAll(): Promise<any> {
+
+export class PedidoRepository implements BaseRepository<number, Pedido>{
+    async getAll(): Promise<Pedido[]> {
         return await Pedido.findAll({include: [ { model:DetallePedido }]})
     }
 
@@ -23,7 +23,7 @@ export class PedidoRepository implements BaseRepository<number, any>{
         })
     }
 
-    async update(id: number, obj: any): Promise<any> {
+    async update(id: number, obj: Pedido): Promise<any> {
         await Pedido.update(obj,{
             where:{
                 id:id
@@ -36,8 +36,8 @@ export class PedidoRepository implements BaseRepository<number, any>{
          const id = await sequelize!.transaction(async (t)=> {
              let count = await Pedido.count()
              let {id} = await Pedido.create({numero: count+1, tipoEntrega: obj.tipoEntrega, estado: obj.estado, fecha:new Date()}, {transaction:t, include:[DetallePedido]});
-            for (const detalle of obj.detallePedidos) {
-                await DetallePedido.create({...detalle,PedidoId:id},{transaction:t})
+            for (const detalle of obj.detalle) {
+                await DetallePedido.create({...detalle,pedidoId:id},{transaction:t})
             }
             return id;
         })

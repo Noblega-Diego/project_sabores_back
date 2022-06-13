@@ -1,18 +1,19 @@
 import { Request, Response } from "express";
 import { ArticuloManufacturadoDao } from "../database/repository/ArticuloManufacturado.dao";
+import {ArticuloManufacturado} from "../database/models/ArticuloManufacturado";
+import {BasicController} from "./BasicController";
 
 
-export class ArticuloListados{
-
-    private daoArticuloManufacturado!: ArticuloManufacturadoDao;
+export class ArticuloListados extends BasicController<ArticuloManufacturadoDao>{
     
     constructor(){
-        this.daoArticuloManufacturado = new ArticuloManufacturadoDao();
+        super()
+        this.repository = new ArticuloManufacturadoDao();
     }
 
     public getAll = async (req:Request, res:Response) =>{
         try {
-            let articulos = [...(await this.daoArticuloManufacturado.getAll())].map(ArticuloListados.parseToArticleDto)
+            let articulos = await this.repository.getAll()
             res.send(articulos);
         }catch (e) {
             res.send({err:e})
@@ -21,7 +22,7 @@ export class ArticuloListados{
 
     public getById = async (req:Request, res:Response) =>{
         try {
-            res.send(ArticuloListados.parseToArticleDto(await this.daoArticuloManufacturado.getById(Number(req.params.id))))
+            res.send(this.articuloToArticuloDto(await this.repository.getById(Number(req.params.id))))
         }catch (e) {
             res.send({err:e})
         }
@@ -30,7 +31,7 @@ export class ArticuloListados{
 
     public remove = async (req:Request, res:Response) =>{
         try {
-        await this.daoArticuloManufacturado.removeOne(Number(req.params.id))
+        await this.repository.removeOne(Number(req.params.id))
             res.status(201).send();
         }catch (e) {
             res.send({err:e})
@@ -39,7 +40,10 @@ export class ArticuloListados{
 
     public create = async (req:Request, res:Response) =>{
         try {
-            const p = await this.daoArticuloManufacturado.create(req.body);
+            const articuloDto =  req.body;
+            let articulo = this.articuloDtoToArticulo(articuloDto);
+            articulo.precios[0].fecha = new Date()
+            const p = await this.repository.create(req.body);
             res.send(p);
         }catch (e) {
             res.send({err:e})
@@ -49,7 +53,10 @@ export class ArticuloListados{
 
     public update = async (req:Request, res:Response) =>{
         try {
-            const p = await this.daoArticuloManufacturado.update(Number(req.params.id),req.body);
+            const articuloDto =  req.body;
+            const p = await this.repository.update(
+                Number(req.params.id),
+                this.articuloDtoToArticulo(articuloDto));
             res.send(p);
         }catch (e) {
             res.send({err:e})
@@ -58,32 +65,57 @@ export class ArticuloListados{
     }
 
 
-    private static parseToArticleDto(a:any):ArticuloDto{
+    private articuloToArticuloDto(a:ArticuloManufacturado):ArticuloDto{
         return {
             id: a.id,
             denominacion: a.denominacion,
             imagen: a.imagen,
             tiempoEstimado: a.tiempoEstimadoCocina,
-            rubroGeneral: {
-                denominacion: a.RubroGeneral.denominacion,
-                id: a.RubroGeneral.id
+            rubro: {
+                denominacion: a.rubro.denominacion,
+                id: a.rubro.id
             },
             categoria: {
-                denominacion: a.Categoria.denominacion,
-                id: a.Categoria.id
+                denominacion: a.categoria.denominacion,
+                id: a.categoria.id
             },
-            precio:Number([...(a.PrecioArticuloManufacturados)].shift().precioVenta)
+            precio:{
+                precioVenta:[...(a.precios)].shift()!.precioVenta
+            }
         }
     }
+
+
+    private articuloDtoToArticulo(a:ArticuloDto):any{
+        return {
+            id: a.id,
+            denominacion: a.denominacion,
+            imagen: a.imagen,
+            tiempoEstimadoCocina: a.tiempoEstimado,
+            rubroCategoriaId: a.rubro.id,
+            categoriaId: a.categoria.id,
+            precios: [{
+                precioVenta: a.precio.precioVenta,
+                precioCompra: a.precio.precioCompra,
+                fecha: new Date(a.precio.fecha!)
+            }]
+        }
+    }
+
 }
 
 interface ArticuloDto{
     id:number
     denominacion:string,
     imagen:string,
-    tiempoEstimado:string,
-    precio:number,
-    rubroGeneral:{
+    tiempoEstimado:number,
+    precio:{
+        id?:number
+        precioVenta:number,
+        precioCompra?:number,
+        fecha?:string,
+    }
+    rubro:{
         id:number,
         denominacion:string
     }
@@ -91,5 +123,9 @@ interface ArticuloDto{
         id:number,
         denominacion:string
     }
+    detalles?:{
+        cantidad:number,
+        insumoId:number
+    }[]
 }
  

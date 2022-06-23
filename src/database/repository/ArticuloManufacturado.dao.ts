@@ -65,4 +65,11 @@ export class ArticuloManufacturadoDao implements BaseRepository<number, Articulo
         return await this.getById(articleId);
     }
 
+    async getAllByRubroId(id: number): Promise<ArticuloManufacturado[]> {
+        return await ArticuloManufacturado.findAll({include: [
+                { model:RubroGeneral },
+                { model:Categoria},
+                { model:PrecioArticuloManufacturado, order: [['fecha', 'DESC']], limit:1} ],
+                    where: {rubroGeneralId:id}})
+    }
 }

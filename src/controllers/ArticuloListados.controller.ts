@@ -2,18 +2,26 @@ import { Request, Response } from "express";
 import { ArticuloManufacturadoDao } from "../database/repository/ArticuloManufacturado.dao";
 import {ArticuloManufacturado} from "../database/models/ArticuloManufacturado";
 import {BasicController} from "./BasicController";
+import {ArticulosService} from "../services/Articulos.service";
 
 
 export class ArticuloListados extends BasicController<ArticuloManufacturadoDao>{
-    
+
+    private articuloService!: ArticulosService;
+
     constructor(){
         super()
         this.repository = new ArticuloManufacturadoDao();
+        this.articuloService = new ArticulosService(this.repository)
     }
 
     public getAll = async (req:Request, res:Response) =>{
         try {
-            let articulos = await this.repository.getAll()
+            let articulos: any[] = []
+            if(req.query.rubroId)
+                articulos = await this.articuloService.getAllByRubroId(Number(req.query.rubroId))
+            else
+                articulos = await this.repository.getAll()
             res.send(articulos);
         }catch (e) {
             res.send({err:e})
@@ -101,7 +109,6 @@ export class ArticuloListados extends BasicController<ArticuloManufacturadoDao>{
             }]
         }
     }
-
 }
 
 interface ArticuloDto{

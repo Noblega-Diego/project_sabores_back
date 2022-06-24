@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {RouterInitializer} from "./RouterInitializer";
+import {RouterInitializer} from "../utils/RouterInitializer";
 import PrecioInsumoController from "../controllers/PrecioInsumo.controller";
 import InsumoController from "../controllers/Insumo.controller";
 import RubroInsumoController from "../controllers/RubroInsumo.controller";

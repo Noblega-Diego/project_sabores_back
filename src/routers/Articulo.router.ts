@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { ArticuloListados } from '../controllers/ArticuloListados.controller';
-import {RouterInitializer} from "./RouterInitializer";
+import {RouterInitializer} from "../utils/RouterInitializer";
 import RubroGeneralController from "../controllers/RubroGeneral.controller";
 import CategoriaController from "../controllers/Categoria.controller";
 import DetalleArticuloController from "../controllers/DetalleArticulo.controller";

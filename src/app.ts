@@ -4,6 +4,7 @@ import RouterArticulo from './routers/Articulo.router'
 import RouterPedido from './routers/Pedido.router'
 import RouterInsumo from './routers/Insumo.router'
 import ImagenRouter from './routers/Image.router'
+import routers from './routers'
 // @ts-ignore
 import cors from 'cors';
 
@@ -14,11 +15,9 @@ const config = {
 app.use(cors())
 app.use(express.json())
 
-app.use(RouterArticulo)
-app.use(RouterPedido)
-app.use(RouterInsumo)
-app.use(ImagenRouter)
-
-app.listen(config.PORT, () => {
-    console.log(`Servidor en puerto ${config.PORT}`);
+routers.then((router)=>{
+    app.use(router)
+    app.listen(config.PORT, () => {
+        console.log(`Servidor en puerto ${config.PORT}`);
+    })
 })

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import PedidoController from "../controllers/Pedido.controller";
-import {RouterInitializer} from "./RouterInitializer";
+import {RouterInitializer} from "../utils/RouterInitializer";
 
 const express = require('express');
 const router:Router = express.Router();

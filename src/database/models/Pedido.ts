@@ -1,5 +1,6 @@
 import {Column, HasMany, Model, Table, DataType} from "sequelize-typescript";
 import {DetallePedido} from "./DetallePedido";
+import { EstadoPedido } from "./EstadoPedido";
 
 @Table
 export class Pedido extends Model {
@@ -17,10 +18,8 @@ export class Pedido extends Model {
     @Column({type:DataType.DATE})
     fecha!: Date
 
-    @Column({
-        type: DataType.ENUM('pendiente', 'aprobado', 'proceso', 'finalizado', 'camino', 'entregado'),
-    })
-    estado!: string
+    @HasMany(()=>EstadoPedido)
+    estados!: EstadoPedido[]
 
     @HasMany(()=>DetallePedido)
     detalle!: DetallePedido[]

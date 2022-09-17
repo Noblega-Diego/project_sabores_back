@@ -14,6 +14,9 @@ import {ArticuloManufacturado} from "./ArticuloManufacturado";
 import {ArticuloManufacturadoDetalle} from "./ArticuloManufacturadoDetalle";
 const env = process.env.NODE_ENV || 'development';
 import config from './../config/config';
+import { EstadoPedido } from './EstadoPedido';
+import { Estado } from './Estado';
+import { UnidadDeMedida } from './UnidadDeMedida';
 
 // @ts-ignore
 const sequelize = new Sequelize({...(config[env]),
@@ -33,6 +36,9 @@ const sequelize = new Sequelize({...(config[env]),
         Categoria,
         ArticuloManufacturado,
         ArticuloManufacturadoDetalle,
+        Estado,
+        EstadoPedido,
+        UnidadDeMedida
         ]
 })
 export {sequelize}

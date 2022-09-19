@@ -6,7 +6,7 @@ import {Usuario} from "./Usuario";
 export class Domicilio extends Model {
     @Column({type:DataType.STRING})
     calle!: string
-    @Column({type:DataType.NUMBER})
+    @Column({type:DataType.INTEGER})
     numero!: number
     @Column({type:DataType.STRING})
     localidad!: string

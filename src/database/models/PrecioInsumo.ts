@@ -4,10 +4,10 @@ import {Insumo} from "./Insumo";
 
 @Table
 export class PrecioInsumo extends Model {
-    @Column({type:DataType.NUMBER})
+    @Column({type:DataType.INTEGER})
     precioVenta!: number
 
-    @Column({type:DataType.NUMBER})
+    @Column({type:DataType.INTEGER})
     precioCompra!: number
 
     @Column({type:DataType.DATE})

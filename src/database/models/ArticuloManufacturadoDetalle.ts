@@ -5,7 +5,7 @@ import {Insumo} from "./Insumo";
 
 @Table
 export class ArticuloManufacturadoDetalle extends Model {
-    @Column({type:DataType.NUMBER})
+    @Column({type:DataType.INTEGER})
     cantidad!:number
 
     @Column({type:DataType.STRING})

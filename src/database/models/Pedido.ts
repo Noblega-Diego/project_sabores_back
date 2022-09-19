@@ -3,7 +3,7 @@ import {DetallePedido} from "./DetallePedido";
 
 @Table
 export class Pedido extends Model {
-    @Column({type:DataType.NUMBER})
+    @Column({type:DataType.INTEGER})
     numero!: number
 
     @Column({

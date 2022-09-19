@@ -13,7 +13,7 @@ export class ArticuloManufacturado extends Model {
     @Column({type:DataType.STRING})
     imagen!:string
 
-    @Column({type:DataType.NUMBER})
+    @Column({type:DataType.INTEGER})
     tiempoEstimadoCocina!:number
 
     @HasMany(()=> PrecioArticuloManufacturado)

@@ -13,7 +13,7 @@ export class Usuario extends Model {
     clave!: string
     @Column({type:DataType.STRING})
     email!: string
-    @Column({type:DataType.NUMBER})
+    @Column({type:DataType.INTEGER})
     telefono!: number
 
     @ForeignKey(()=>Rol)

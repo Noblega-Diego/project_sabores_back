@@ -5,7 +5,7 @@ import {Pedido} from "./Pedido";
 
 @Table
 export class DetallePedido extends Model {
-    @Column({type:DataType.NUMBER})
+    @Column({type:DataType.INTEGER})
     cantidad!:number
 
     @ForeignKey(()=>ArticuloManufacturado)

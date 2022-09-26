@@ -4,10 +4,10 @@ import {ArticuloManufacturado} from "./ArticuloManufacturado";
 
 @Table
 export class PrecioArticuloManufacturado extends Model {
-    @Column({type:DataType.NUMBER})
+    @Column({type:DataType.INTEGER})
     precioVenta!: number
 
-    @Column({type:DataType.NUMBER})
+    @Column({type:DataType.INTEGER})
     precioCompra!: number
 
     @Column({type:DataType.DATE})

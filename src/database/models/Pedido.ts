@@ -4,7 +4,7 @@ import { EstadoPedido } from "./EstadoPedido";
 
 @Table
 export class Pedido extends Model {
-    @Column({type:DataType.NUMBER})
+    @Column({type:DataType.INTEGER})
     numero!: number
 
     @Column({

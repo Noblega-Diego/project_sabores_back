@@ -6,7 +6,7 @@ import { UnidadDeMedida } from "./UnidadDeMedida";
 
 @Table
 export class ArticuloManufacturadoDetalle extends Model {
-    @Column({type:DataType.NUMBER})
+    @Column({type:DataType.INTEGER})
     cantidad!:number
 
     @BelongsTo(()=>UnidadDeMedida)

@@ -12,9 +12,9 @@ export class Insumo extends Model {
     @Column({type:DataType.STRING})
     imagen!: string
     
-    @Column({type:DataType.NUMBER})
+    @Column({type:DataType.INTEGER})
     stockMinimo!: number
-    @Column({type:DataType.NUMBER})
+    @Column({type:DataType.INTEGER})
     stock!: number
 
     @ForeignKey(()=>RubroInsumo)

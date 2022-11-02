@@ -2,6 +2,7 @@ import {BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table} from "se
 import {RubroInsumo} from "./RubroInsumo";
 import {ArticuloManufacturadoDetalle} from "./ArticuloManufacturadoDetalle";
 import {PrecioInsumo} from "./PrecioInsumo";
+import { UnidadDeMedida } from "./UnidadDeMedida";
 
 
 @Table
@@ -10,8 +11,7 @@ export class Insumo extends Model {
     denominacion!: string
     @Column({type:DataType.STRING})
     imagen!: string
-    @Column({type:DataType.STRING})
-    unidadDeMedida!: string
+    
     @Column({type:DataType.INTEGER})
     stockMinimo!: number
     @Column({type:DataType.INTEGER})
@@ -29,4 +29,9 @@ export class Insumo extends Model {
     @HasMany(()=>PrecioInsumo)
     precio!:PrecioInsumo[]
 
+    @ForeignKey(()=>UnidadDeMedida)
+    unidadDeMedidaId!: number
+
+    @BelongsTo(()=>UnidadDeMedida)
+    unidadDeMedida!: UnidadDeMedida
 }

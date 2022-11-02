@@ -1,6 +1,7 @@
 import {BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table} from "sequelize-typescript";
 import {ArticuloManufacturado} from "./ArticuloManufacturado";
 import {Insumo} from "./Insumo";
+import { UnidadDeMedida } from "./UnidadDeMedida";
 
 
 @Table
@@ -8,8 +9,11 @@ export class ArticuloManufacturadoDetalle extends Model {
     @Column({type:DataType.INTEGER})
     cantidad!:number
 
-    @Column({type:DataType.STRING})
-    unidadDeMedida!:string
+    @ForeignKey(()=>UnidadDeMedida)
+    unidadDeMedidaId!: number
+
+    @BelongsTo(()=>UnidadDeMedida)
+    unidadDeMedida!: UnidadDeMedida
 
     @ForeignKey(()=>ArticuloManufacturado)
     articuloManufacturadoId!: number;

@@ -17,6 +17,8 @@ import config from './../config/config';
 import { EstadoPedido } from './EstadoPedido';
 import { Estado } from './Estado';
 import { UnidadDeMedida } from './UnidadDeMedida';
+import { Receta } from './Receta';
+import { RecetaDetalle } from './RecetaDetalle';
 
 // @ts-ignore
 const sequelize = new Sequelize({...(config[env]),
@@ -38,7 +40,9 @@ const sequelize = new Sequelize({...(config[env]),
         ArticuloManufacturadoDetalle,
         Estado,
         EstadoPedido,
-        UnidadDeMedida
+        UnidadDeMedida,
+        Receta,
+        RecetaDetalle
         ]
 })
 export {sequelize}

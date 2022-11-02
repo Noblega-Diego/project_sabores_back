@@ -9,8 +9,11 @@ export class ArticuloManufacturadoDetalle extends Model {
     @Column({type:DataType.INTEGER})
     cantidad!:number
 
+    @ForeignKey(()=>UnidadDeMedida)
+    unidadDeMedidaId!: number
+
     @BelongsTo(()=>UnidadDeMedida)
-    unidadDeMedidaId!: number;
+    unidadDeMedida!: UnidadDeMedida
 
     @ForeignKey(()=>ArticuloManufacturado)
     articuloManufacturadoId!: number;

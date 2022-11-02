@@ -1,4 +1,4 @@
-import {Column, Model, Table, DataType, HasMany, BelongsTo, HasOne} from "sequelize-typescript";
+import {Column, Model, Table, DataType, HasMany, BelongsTo, HasOne, ForeignKey} from "sequelize-typescript";
 import { EstadoPedido } from "./EstadoPedido";
 import { Insumo } from "./Insumo";
 import { Receta } from "./Receta";
@@ -11,19 +11,22 @@ export class RecetaDetalle extends Model {
     })
     cantidad!: number
 
-    @BelongsTo(()=>UnidadDeMedida)
+    @ForeignKey(()=>UnidadDeMedida)
     unidadDeMedidaId!: number
 
-    @BelongsTo(()=>Insumo)
+    @BelongsTo(()=>UnidadDeMedida)
+    unidadDeMedida!: UnidadDeMedida
+
+    @ForeignKey(()=>Insumo)
     insumoId!: number
 
-    @HasOne(()=>Insumo)
+    @BelongsTo(()=>Insumo)
     insumo!:Insumo
     
-    @BelongsTo(()=>Receta)
+    @ForeignKey(()=>Receta)
     recetaId!: number
 
-    @HasMany(()=>RecetaDetalle)
-    detalles!: RecetaDetalle[]
+    @BelongsTo(()=>Receta)
+    receta!: Receta
 
 }

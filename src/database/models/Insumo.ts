@@ -29,7 +29,9 @@ export class Insumo extends Model {
     @HasMany(()=>PrecioInsumo)
     precio!:PrecioInsumo[]
 
-    @BelongsTo(()=>UnidadDeMedida)
+    @ForeignKey(()=>UnidadDeMedida)
     unidadDeMedidaId!: number
 
+    @BelongsTo(()=>UnidadDeMedida)
+    unidadDeMedida!: UnidadDeMedida
 }

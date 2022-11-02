@@ -13,6 +13,7 @@ export class Receta extends Model {
     })
     instruccion!: String
 
+    
     @HasMany(()=>RecetaDetalle)
-    insumo!:RecetaDetalle
+    insumo!:RecetaDetalle[]
 }
